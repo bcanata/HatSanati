@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calligraphy Art</title>
+    <style>
+        @font-face {
+            font-family: 'HLT Burgues Script';
+            src: url('HLT Burgues Script.ttf') format('truetype');
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f5f0e8;
+            font-family: 'HLT Burgues Script', cursive;
+        }
+
+        .artwork-container {
+            width: 800px;
+            height: 600px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .text-wrapper {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 40px 0;
+        }
+
+        .text-line {
+            font-size: 6rem;
+            color: #800020;
+            text-align: center;
+            position: relative;
+            margin: 0;
+            transform: rotate(-5deg);
+            line-height: 1.2;
+        }
+
+        .ornament-container {
+            position: relative;
+            width: 100%;
+            height: 120px;
+            margin-top: -20px;
+        }
+
+        .text-flourish {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+        }
+
+        .flourish-path {
+            fill: none;
+            stroke: #800020;
+            stroke-width: 1.5;
+        }
+
+        .decorative-dots {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background-color: #800020;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .ornamental-frame {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .decorative-swirl {
+            position: absolute;
+            width: 100%;
+            height: 100px;
+            bottom: -50px;
+        }
+
+        .corner-flourish {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+        }
+
+        .top-left {
+            top: 0;
+            left: 0;
+            transform: rotate(0deg);
+        }
+
+        .top-right {
+            top: 0;
+            right: 0;
+            transform: rotate(90deg);
+        }
+
+        .bottom-left {
+            bottom: 0;
+            left: 0;
+            transform: rotate(-90deg);
+        }
+
+        .bottom-right {
+            bottom: 0;
+            right: 0;
+            transform: rotate(180deg);
+        }
+
+        @media (max-width: 850px) {
+            .artwork-container {
+                width: 90%;
+                height: 400px;
+            }
+
+            .text-line {
+                font-size: 4rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="artwork-container">
+        <svg class="ornamental-frame" viewBox="0 0 800 600">
+            <path
+                d="M 50,50 C 150,30 650,30 750,50 C 770,150 770,450 750,550 C 650,570 150,570 50,550 C 30,450 30,150 50,50 Z"
+                class="flourish-path" />
+        </svg>
+
+        <div class="text-wrapper">
+            <div class="text-line">Bugra</div>
+            <div class="ornament-container">
+                <svg class="text-flourish" viewBox="0 0 400 120">
+                    <!-- Main flourish -->
+                    <path d="M 50,20 
+                            C 100,40 150,0 200,20 
+                            S 300,40 350,20" class="flourish-path" />
+
+                    <!-- Lower flourish -->
+                    <path d="M 30,40 
+                            C 80,60 150,20 200,40 
+                            S 320,60 370,40" class="flourish-path" />
+
+                    <!-- Decorative swirls -->
+                    <path d="M 180,30 
+                            C 190,20 200,20 200,30 
+                            S 210,40 220,30" class="flourish-path" />
+
+                    <!-- Left side ornament -->
+                    <path d="M 50,30 
+                            C 40,20 30,20 20,30 
+                            Q 10,40 20,50 
+                            C 30,60 40,60 50,50" class="flourish-path" />
+
+                    <!-- Right side ornament -->
+                    <path d="M 350,30 
+                            C 360,20 370,20 380,30 
+                            Q 390,40 380,50 
+                            C 370,60 360,60 350,50" class="flourish-path" />
+
+                    <!-- Small dots -->
+                    <circle cx="200" cy="60" r="2" fill="#800020" />
+                    <circle cx="180" cy="65" r="2" fill="#800020" />
+                    <circle cx="220" cy="65" r="2" fill="#800020" />
+                </svg>
+            </div>
+        </div>
+
+        <div class="decorative-dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+
+    <script>
+        // Add script to adjust SVG viewBox based on text width
+        document.addEventListener('DOMContentLoaded', function () {
+            const textElements = document.querySelectorAll('.text-line');
+            textElements.forEach(text => {
+                const width = text.offsetWidth;
+                const flourish = text.nextElementSibling.querySelector('.text-flourish');
+                flourish.setAttribute('viewBox', `0 0 ${width + 100} 120`);
+            });
+        });
+    </script>
+</body>
+
+</html>
