@@ -7,8 +7,10 @@
     <title>Calligraphy Art</title>
     <style>
         @font-face {
-            font-family: 'HLT Burgues Script';
-            src: url('HLT Burgues Script.ttf') format('truetype');
+            font-family: 'Ilkson';
+            src: url('ilkson.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
         }
 
         body {
@@ -19,7 +21,7 @@
             justify-content: center;
             align-items: center;
             background-color: #f5f0e8;
-            font-family: 'HLT Burgues Script', cursive;
+            font-family: 'Ilkson', cursive;
         }
 
         .artwork-container {
@@ -31,6 +33,20 @@
             align-items: center;
             justify-content: center;
             gap: 30px;
+            background: #f4e4bc;
+            /* Slightly warmer base color */
+            overflow: hidden;
+        }
+
+        .paper-texture {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            opacity: 0.7;
+            mix-blend-mode: multiply;
         }
 
         .text-wrapper {
@@ -39,6 +55,8 @@
             flex-direction: column;
             align-items: center;
             margin: 40px 0;
+            z-index: 2;
+            /* Ensure text is above texture */
         }
 
         .text-line {
@@ -47,8 +65,10 @@
             text-align: center;
             position: relative;
             margin: 0;
-            transform: rotate(-5deg);
             line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            font-family: 'Ilkson', cursive;
         }
 
         .ornament-container {
@@ -64,12 +84,14 @@
             height: 100%;
             left: 0;
             top: 0;
+            transition: all 0.3s ease;
         }
 
         .flourish-path {
             fill: none;
             stroke: #800020;
             stroke-width: 1.5;
+            filter: url(#shadow);
         }
 
         .decorative-dots {
@@ -140,11 +162,83 @@
                 font-size: 4rem;
             }
         }
+
+        .input-container {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            width: 300px;
+            text-align: center;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            border: 2px solid #800020;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #800020;
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .text-input:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(128, 0, 32, 0.3);
+            border-color: #a00028;
+        }
     </style>
 </head>
 
 <body>
     <div class="artwork-container">
+        <!-- Add SVG filters and paper texture -->
+        <svg width="0" height="0">
+            <defs>
+                <!-- Noise filter for paper texture -->
+                <filter id="paper-texture" x="0%" y="0%" width="100%" height="100%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" result="noise" />
+                    <feDiffuseLighting in="noise" lighting-color="#938976" surfaceScale="2">
+                        <feDistantLight azimuth="45" elevation="60" />
+                    </feDiffuseLighting>
+                </filter>
+
+                <!-- Shadow filter for flourishes -->
+                <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur" />
+                    <feOffset in="blur" dx="2" dy="2" result="offsetBlur" />
+                    <feMerge>
+                        <feMergeNode in="offsetBlur" />
+                        <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                </filter>
+
+                <!-- Grain texture -->
+                <filter id="grain">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
+                    <feColorMatrix type="saturate" values="0" />
+                </filter>
+            </defs>
+        </svg>
+
+        <!-- Paper texture overlay -->
+        <svg class="paper-texture" viewBox="0 0 800 600" preserveAspectRatio="none">
+            <!-- Base texture -->
+            <rect width="100%" height="100%" filter="url(#paper-texture)" />
+
+            <!-- Grain overlay -->
+            <rect width="100%" height="100%" filter="url(#grain)" opacity="0.1" />
+
+            <!-- Subtle stains -->
+            <circle cx="20%" cy="30%" r="100" fill="#938976" opacity="0.03" />
+            <circle cx="80%" cy="70%" r="120" fill="#8b7355" opacity="0.02" />
+            <ellipse cx="50%" cy="40%" rx="200" ry="150" fill="#826644" opacity="0.015" />
+        </svg>
+
         <svg class="ornamental-frame" viewBox="0 0 800 600">
             <path
                 d="M 50,50 C 150,30 650,30 750,50 C 770,150 770,450 750,550 C 650,570 150,570 50,550 C 30,450 30,150 50,50 Z"
@@ -195,17 +289,73 @@
             <div class="dot"></div>
             <div class="dot"></div>
         </div>
+
+        <!-- Add input container -->
+        <div class="input-container">
+            <input type="text" class="text-input" placeholder="Type your text here..." value="Bugra" maxlength="20">
+        </div>
     </div>
 
     <script>
-        // Add script to adjust SVG viewBox based on text width
         document.addEventListener('DOMContentLoaded', function () {
-            const textElements = document.querySelectorAll('.text-line');
-            textElements.forEach(text => {
-                const width = text.offsetWidth;
-                const flourish = text.nextElementSibling.querySelector('.text-flourish');
-                flourish.setAttribute('viewBox', `0 0 ${width + 100} 120`);
+            const textInput = document.querySelector('.text-input');
+            const textLine = document.querySelector('.text-line');
+            const flourishContainer = document.querySelector('.text-flourish');
+
+            // Function to update text and flourish size
+            function updateText(value) {
+                // Update the displayed text
+                textLine.textContent = value || 'Bugra';
+
+                // Wait for the DOM to update with the new text
+                requestAnimationFrame(() => {
+                    // Get the new text width
+                    const width = textLine.offsetWidth;
+
+                    // Calculate new viewBox width based on text length
+                    const baseWidth = 400;
+                    const minWidth = 300;
+                    const charWidth = 50; // Approximate width per character
+                    const newWidth = Math.max(minWidth, baseWidth + (value.length * charWidth));
+
+                    // Update SVG viewBox
+                    flourishContainer.setAttribute('viewBox', `0 0 ${newWidth} 120`);
+
+                    // Scale flourish paths based on text width
+                    const paths = flourishContainer.querySelectorAll('path');
+                    const scale = width / baseWidth;
+
+                    paths.forEach(path => {
+                        // Update path coordinates based on new width
+                        const d = path.getAttribute('d');
+                        const scaledD = scalePathData(d, scale);
+                        path.setAttribute('d', scaledD);
+                    });
+
+                    // Update dots position
+                    const dots = flourishContainer.querySelectorAll('circle');
+                    dots.forEach((dot, index) => {
+                        const baseX = 180 + (index * 20);
+                        dot.setAttribute('cx', baseX * scale);
+                    });
+                });
+            }
+
+            // Helper function to scale SVG path data
+            function scalePathData(d, scale) {
+                return d.replace(/[-0-9.]+/g, (match) => {
+                    const num = parseFloat(match);
+                    return (num * scale).toFixed(2);
+                });
+            }
+
+            // Add input event listener
+            textInput.addEventListener('input', (e) => {
+                updateText(e.target.value);
             });
+
+            // Initialize with default text
+            updateText(textInput.value);
         });
     </script>
 </body>
