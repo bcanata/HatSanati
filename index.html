@@ -66,47 +66,10 @@
                 <span class="last-letter"></span>
             </div>
             <div class="ornament-container">
-                <svg class="text-flourish" viewBox="0 0 400 120">
-                    <!-- Main flourish -->
-                    <path d="M 50,20 
-                            C 100,40 150,0 200,20 
-                            S 300,40 350,20" class="flourish-path" />
-
-                    <!-- Lower flourish -->
-                    <path d="M 30,40 
-                            C 80,60 150,20 200,40 
-                            S 320,60 370,40" class="flourish-path" />
-
-                    <!-- Decorative swirls -->
-                    <path d="M 180,30 
-                            C 190,20 200,20 200,30 
-                            S 210,40 220,30" class="flourish-path" />
-
-                    <!-- Left side ornament -->
-                    <path d="M 50,30 
-                            C 40,20 30,20 20,30 
-                            Q 10,40 20,50 
-                            C 30,60 40,60 50,50" class="flourish-path" />
-
-                    <!-- Right side ornament -->
-                    <path d="M 350,30 
-                            C 360,20 370,20 380,30 
-                            Q 390,40 380,50 
-                            C 370,60 360,60 350,50" class="flourish-path" />
-
-                    <!-- Small dots -->
-                    <circle cx="200" cy="60" r="2" fill="#800020" />
-                    <circle cx="180" cy="65" r="2" fill="#800020" />
-                    <circle cx="220" cy="65" r="2" fill="#800020" />
-                </svg>
+                <span class="ornament"></span>
             </div>
         </div>
 
-        <div class="decorative-dots">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-        </div>
 
         <!-- Add input container -->
         <div class="input-container">
@@ -120,17 +83,19 @@
             const firstLetterSpan = document.querySelector('.first-letter');
             const middleLettersSpan = document.querySelector('.middle-letters');
             const lastLetterSpan = document.querySelector('.last-letter');
-            const flourishContainer = document.querySelector('.text-flourish');
+            const ornamentSpan = document.querySelector('.ornament');
+            const ornamentContainer = document.querySelector('.ornament-container');
+
+            // Set letter spacing for the text elements
+            firstLetterSpan.style.letterSpacing = '-0.1em';
+            middleLettersSpan.style.letterSpacing = '-0.1em';
+            lastLetterSpan.style.letterSpacing = '-0.1em';
 
             // Set initial placeholder text
             const initialText = textInput.value || 'Bugra';
-            firstLetterSpan.textContent = initialText[0];
-            if (initialText.length > 1) {
-                middleLettersSpan.textContent = initialText.substring(1, initialText.length - 1);
-                lastLetterSpan.textContent = initialText[initialText.length - 1];
-            }
+            updateText(initialText);
 
-            // Function to update text and flourish size
+            // Function to update text and ornament
             function updateText(value) {
                 if (!value) value = 'Bugra';
 
@@ -146,57 +111,50 @@
                     lastLetterSpan.textContent = '';
                 }
 
-                // Wait for the DOM to update with the new text
-                requestAnimationFrame(() => {
-                    // Get the new text width (combined width of all spans)
-                    const width = firstLetterSpan.offsetWidth +
-                        middleLettersSpan.offsetWidth +
-                        lastLetterSpan.offsetWidth;
+                // Update ornament based on text length
+                if (value.length >= 3) {
+                    const ornamentNumber = Math.min(value.length - 3, 7); // 0 for 3 chars, 1 for 4 chars, etc.
+                    ornamentSpan.textContent = ornamentNumber.toString();
+                    ornamentSpan.style.display = 'block';
 
-                    // Calculate new viewBox width based on text length
-                    const baseWidth = 400;
-                    const minWidth = 300;
-                    const charWidth = 50; // Approximate width per character
-                    const newWidth = Math.max(minWidth, baseWidth + (value.length * charWidth));
-
-                    // Update SVG viewBox
-                    flourishContainer.setAttribute('viewBox', `0 0 ${newWidth} 120`);
-
-                    // Scale flourish paths based on text width
-                    const paths = flourishContainer.querySelectorAll('path');
-                    const scale = width / baseWidth;
-
-                    paths.forEach(path => {
-                        // Update path coordinates based on new width
-                        const d = path.getAttribute('d');
-                        const scaledD = scalePathData(d, scale);
-                        path.setAttribute('d', scaledD);
-                    });
-
-                    // Update dots position
-                    const dots = flourishContainer.querySelectorAll('circle');
-                    dots.forEach((dot, index) => {
-                        const baseX = 180 + (index * 20);
-                        dot.setAttribute('cx', baseX * scale);
-                    });
-                });
-            }
-
-            // Helper function to scale SVG path data
-            function scalePathData(d, scale) {
-                return d.replace(/[-0-9.]+/g, (match) => {
-                    const num = parseFloat(match);
-                    return (num * scale).toFixed(2);
-                });
+                    switch (value.length) {
+                        case 10:
+                            ornamentContainer.style.transform = 'translateY(-200px)';
+                            break;
+                        case 9:
+                            ornamentContainer.style.transform = 'translateY(-200px)';
+                            break;
+                        case 8:
+                            ornamentContainer.style.transform = 'translateY(-195px)';
+                            break;
+                        case 7:
+                            ornamentContainer.style.transform = 'translateY(-210px)';
+                            break;
+                        case 6:
+                            ornamentContainer.style.transform = 'translateY(-175px)';
+                            break;
+                        case 5:
+                            ornamentContainer.style.transform = 'translateY(-191px)';
+                            break;
+                        case 4:
+                            ornamentContainer.style.transform = 'translateY(-155px)';
+                            break;
+                        case 3:
+                            ornamentContainer.style.transform = 'translateY(-115px)';
+                            break;
+                        default:
+                            ornamentContainer.style.transform = 'translateY(-30px)';
+                    }
+                } else {
+                    ornamentSpan.style.display = 'none';
+                    ornamentContainer.style.transform = 'translateY(0)';
+                }
             }
 
             // Add input event listener
             textInput.addEventListener('input', (e) => {
                 updateText(e.target.value);
             });
-
-            // Initialize with default text
-            updateText(textInput.value);
         });
     </script>
 </body>
