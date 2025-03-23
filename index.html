@@ -5,193 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calligraphy Art</title>
-    <style>
-        @font-face {
-            font-family: 'Ilkson';
-            src: url('ilkson.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #f5f0e8;
-            font-family: 'Ilkson', cursive;
-        }
-
-        .artwork-container {
-            width: 800px;
-            height: 600px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 30px;
-            background: #f4e4bc;
-            /* Slightly warmer base color */
-            overflow: hidden;
-        }
-
-        .paper-texture {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            opacity: 0.7;
-            mix-blend-mode: multiply;
-        }
-
-        .text-wrapper {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 40px 0;
-            z-index: 2;
-            /* Ensure text is above texture */
-        }
-
-        .text-line {
-            font-size: 6rem;
-            color: #800020;
-            text-align: center;
-            position: relative;
-            margin: 0;
-            line-height: 1.2;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            font-family: 'Ilkson', cursive;
-        }
-
-        .ornament-container {
-            position: relative;
-            width: 100%;
-            height: 120px;
-            margin-top: -20px;
-        }
-
-        .text-flourish {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            left: 0;
-            top: 0;
-            transition: all 0.3s ease;
-        }
-
-        .flourish-path {
-            fill: none;
-            stroke: #800020;
-            stroke-width: 1.5;
-            filter: url(#shadow);
-        }
-
-        .decorative-dots {
-            display: flex;
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .dot {
-            width: 6px;
-            height: 6px;
-            background-color: #800020;
-            border-radius: 50%;
-            position: relative;
-        }
-
-        .ornamental-frame {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        .decorative-swirl {
-            position: absolute;
-            width: 100%;
-            height: 100px;
-            bottom: -50px;
-        }
-
-        .corner-flourish {
-            position: absolute;
-            width: 80px;
-            height: 80px;
-        }
-
-        .top-left {
-            top: 0;
-            left: 0;
-            transform: rotate(0deg);
-        }
-
-        .top-right {
-            top: 0;
-            right: 0;
-            transform: rotate(90deg);
-        }
-
-        .bottom-left {
-            bottom: 0;
-            left: 0;
-            transform: rotate(-90deg);
-        }
-
-        .bottom-right {
-            bottom: 0;
-            right: 0;
-            transform: rotate(180deg);
-        }
-
-        @media (max-width: 850px) {
-            .artwork-container {
-                width: 90%;
-                height: 400px;
-            }
-
-            .text-line {
-                font-size: 4rem;
-            }
-        }
-
-        .input-container {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-            width: 300px;
-            text-align: center;
-        }
-
-        .text-input {
-            width: 100%;
-            padding: 12px;
-            font-size: 18px;
-            border: 2px solid #800020;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.9);
-            color: #800020;
-            text-align: center;
-            font-family: 'Arial', sans-serif;
-            transition: all 0.3s ease;
-        }
-
-        .text-input:focus {
-            outline: none;
-            box-shadow: 0 0 10px rgba(128, 0, 32, 0.3);
-            border-color: #a00028;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -246,7 +60,11 @@
         </svg>
 
         <div class="text-wrapper">
-            <div class="text-line">Bugra</div>
+            <div class="text-line">
+                <span class="first-letter"></span>
+                <span class="middle-letters"></span>
+                <span class="last-letter"></span>
+            </div>
             <div class="ornament-container">
                 <svg class="text-flourish" viewBox="0 0 400 120">
                     <!-- Main flourish -->
@@ -299,18 +117,41 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const textInput = document.querySelector('.text-input');
-            const textLine = document.querySelector('.text-line');
+            const firstLetterSpan = document.querySelector('.first-letter');
+            const middleLettersSpan = document.querySelector('.middle-letters');
+            const lastLetterSpan = document.querySelector('.last-letter');
             const flourishContainer = document.querySelector('.text-flourish');
+
+            // Set initial placeholder text
+            const initialText = textInput.value || 'Bugra';
+            firstLetterSpan.textContent = initialText[0];
+            if (initialText.length > 1) {
+                middleLettersSpan.textContent = initialText.substring(1, initialText.length - 1);
+                lastLetterSpan.textContent = initialText[initialText.length - 1];
+            }
 
             // Function to update text and flourish size
             function updateText(value) {
-                // Update the displayed text
-                textLine.textContent = value || 'Bugra';
+                if (!value) value = 'Bugra';
+
+                // Split the text to apply different fonts
+                if (value.length > 1) {
+                    firstLetterSpan.textContent = value[0]; // First letter
+                    middleLettersSpan.textContent = value.substring(1, value.length - 1); // Middle letters
+                    lastLetterSpan.textContent = value[value.length - 1]; // Last letter
+                } else {
+                    // If only one character, it's both first and last
+                    firstLetterSpan.textContent = value;
+                    middleLettersSpan.textContent = '';
+                    lastLetterSpan.textContent = '';
+                }
 
                 // Wait for the DOM to update with the new text
                 requestAnimationFrame(() => {
-                    // Get the new text width
-                    const width = textLine.offsetWidth;
+                    // Get the new text width (combined width of all spans)
+                    const width = firstLetterSpan.offsetWidth +
+                        middleLettersSpan.offsetWidth +
+                        lastLetterSpan.offsetWidth;
 
                     // Calculate new viewBox width based on text length
                     const baseWidth = 400;
