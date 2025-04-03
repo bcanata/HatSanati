@@ -12,13 +12,6 @@
     font-style: normal;
 }
 
-@font-face {
-    font-family: 'WR';
-    src: url('./fonts/wr.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
 body {
     margin: 0;
     padding: 0;
@@ -31,17 +24,16 @@ body {
 }
 
 .artwork-container {
-    width: 500px;
-    height: 500px;
+    width: 800px;
+    height: 600px;
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 30px;
-    background: #f2e6cf; /* Lighter parchment color matching the image */
-    border: 12px solid #183a5f; /* Dark blue border */
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    background: #f4e4bc;
+    /* Slightly warmer base color */
     overflow: hidden;
 }
 
@@ -63,7 +55,7 @@ body {
     align-items: center;
     margin: 40px 0;
     z-index: 2;
-    transform: scale(0.9); /* Slightly reduce size to fit in the frame */
+    /* Ensure text is above texture */
 }
 
 .text-line {
@@ -80,32 +72,32 @@ body {
     height: 150px;
 }
 
-/* First letter uses WR font */
+/* First letter uses Aralar font */
 .first-letter {
-    font-family: 'WR', serif;
+    font-family: 'Aralar', serif;
     font-size: 5.5rem;
     display: inline-block;
     line-height: 1;
-    margin-top: 0;
+    margin-top: 5px;
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* Last letter uses WR font */
+/* Last letter uses Ilkson font */
 .last-letter {
-    font-family: 'WR', serif;
-    font-size: 5.5rem;
+    font-family: 'Ilkson', cursive;
+    font-size: 6rem;
     display: inline-block;
     line-height: 1;
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* Middle letters use WR font */
+/* Middle letters use Aralar font */
 .middle-letters {
-    font-family: 'WR', serif;
+    font-family: 'Aralar', serif;
     font-size: 5.5rem;
     display: inline-block;
     line-height: 1;
-    margin-top: 0;
+    margin-top: 5px;
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
 }
 
@@ -136,8 +128,9 @@ body {
 
 .flourish-path {
     fill: none;
-    stroke: transparent; /* Hide the previous path */
-    stroke-width: 0;
+    stroke: #000000;
+    stroke-width: 1.5;
+    filter: url(#shadow);
 }
 
 .decorative-dots {
@@ -156,101 +149,9 @@ body {
 
 .ornamental-frame {
     position: absolute;
-    width: calc(100% - 30px);
-    height: calc(100% - 30px);
-    top: 15px;
-    left: 15px;
+    width: 100%;
+    height: 100%;
     pointer-events: none;
-    border: 3px solid #c9a855; /* Gold border inside the blue border */
-    z-index: 1;
-}
-
-.ornamental-pattern {
-    position: absolute;
-    background-color: transparent;
-    z-index: 1;
-}
-
-.ornamental-pattern-top, .ornamental-pattern-bottom {
-    width: calc(100% - 80px);
-    height: 20px;
-    left: 40px;
-    background-image: repeating-linear-gradient(to right, 
-        #183a5f 0px, 
-        #183a5f 5px, 
-        #c9a855 5px, 
-        #c9a855 10px,
-        #183a5f 10px, 
-        #183a5f 15px,
-        transparent 15px,
-        transparent 20px
-    );
-}
-
-.ornamental-pattern-left, .ornamental-pattern-right {
-    width: 20px;
-    height: calc(100% - 80px);
-    top: 40px;
-    background-image: repeating-linear-gradient(to bottom, 
-        #183a5f 0px, 
-        #183a5f 5px, 
-        #c9a855 5px, 
-        #c9a855 10px,
-        #183a5f 10px, 
-        #183a5f 15px,
-        transparent 15px,
-        transparent 20px
-    );
-}
-
-.ornamental-pattern-top {
-    top: 0;
-}
-
-.ornamental-pattern-bottom {
-    bottom: 0;
-}
-
-.ornamental-pattern-left {
-    left: 0;
-}
-
-.ornamental-pattern-right {
-    right: 0;
-}
-
-.ornamental-corner {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    background: transparent;
-    border-width: 20px;
-    border-style: solid;
-    z-index: 2;
-}
-
-.corner-tl {
-    top: 0;
-    left: 0;
-    border-color: #183a5f transparent transparent #183a5f;
-}
-
-.corner-tr {
-    top: 0;
-    right: 0;
-    border-color: #183a5f #183a5f transparent transparent;
-}
-
-.corner-bl {
-    bottom: 0;
-    left: 0;
-    border-color: transparent transparent #183a5f #183a5f;
-}
-
-.corner-br {
-    bottom: 0;
-    right: 0;
-    border-color: transparent #183a5f #183a5f transparent;
 }
 
 .decorative-swirl {
@@ -304,10 +205,10 @@ body {
     width: 100%;
     padding: 12px;
     font-size: 18px;
-    border: 2px solid #183a5f; /* Update border color to match the frame */
+    border: 2px solid #800020;
     border-radius: 8px;
     background: rgba(255, 255, 255, 0.9);
-    color: #183a5f; /* Update text color to match the frame */
+    color: #800020;
     text-align: center;
     font-family: 'Arial', sans-serif;
     transition: all 0.3s ease;
@@ -315,8 +216,8 @@ body {
 
 .text-input:focus {
     outline: none;
-    box-shadow: 0 0 10px rgba(24, 58, 95, 0.3); /* Update shadow color */
-    border-color: #183a5f;
+    box-shadow: 0 0 10px rgba(128, 0, 32, 0.3);
+    border-color: #a00028;
 }
 
 @media (max-width: 850px) {
@@ -325,38 +226,11 @@ body {
         height: 400px;
     }
 
-    .first-letter, .last-letter, .middle-letters {
+    .first-letter, .last-letter {
         font-size: 4rem;
     }
-}
 
-/* Add decorative gold corners to the inner frame */
-.ornamental-frame:before, .ornamental-frame:after,
-.ornamental-frame > *:before, .ornamental-frame > *:after {
-    content: '';
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: #c9a855; /* Gold color */
-    z-index: 3;
-}
-
-.ornamental-frame:before {
-    top: -4px;
-    left: -4px;
-}
-
-.ornamental-frame:after {
-    top: -4px;
-    right: -4px;
-}
-
-.ornamental-frame > *:before {
-    bottom: -4px;
-    left: -4px;
-}
-
-.ornamental-frame > *:after {
-    bottom: -4px;
-    right: -4px;
+    .middle-letters {
+        font-size: 3.5rem;
+    }
 } 
