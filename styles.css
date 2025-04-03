@@ -12,6 +12,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'WR';
+    src: url('./fonts/wr.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -72,32 +79,32 @@ body {
     height: 150px;
 }
 
-/* First letter uses Aralar font */
+/* First letter uses WR font */
 .first-letter {
-    font-family: 'Aralar', serif;
+    font-family: 'WR', serif;
     font-size: 5.5rem;
     display: inline-block;
     line-height: 1;
-    margin-top: 5px;
+    margin-top: 0;
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* Last letter uses Ilkson font */
+/* Last letter uses WR font */
 .last-letter {
-    font-family: 'Ilkson', cursive;
-    font-size: 6rem;
+    font-family: 'WR', serif;
+    font-size: 5.5rem;
     display: inline-block;
     line-height: 1;
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* Middle letters use Aralar font */
+/* Middle letters use WR font */
 .middle-letters {
-    font-family: 'Aralar', serif;
+    font-family: 'WR', serif;
     font-size: 5.5rem;
     display: inline-block;
     line-height: 1;
-    margin-top: 5px;
+    margin-top: 0;
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
 }
 
@@ -226,11 +233,7 @@ body {
         height: 400px;
     }
 
-    .first-letter, .last-letter {
+    .first-letter, .last-letter, .middle-letters {
         font-size: 4rem;
-    }
-
-    .middle-letters {
-        font-size: 3.5rem;
     }
 } 
