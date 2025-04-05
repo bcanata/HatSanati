@@ -12,6 +12,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'WR';
+    src: url('./fonts/wr.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -32,9 +39,13 @@ body {
     align-items: center;
     justify-content: center;
     gap: 30px;
-    background: #f4e4bc;
-    /* Slightly warmer base color */
+    background: #eee5cb; /* Lighter papyrus color to match example */
     overflow: hidden;
+    border: 20px solid transparent;
+    border-image: linear-gradient(45deg, #b38728, #deb761, #ffd700, #deb761, #b38728) 1; /* More vibrant gold gradient */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    /* Inner shadow for depth */
+    box-shadow: inset 0 0 40px rgba(101, 67, 33, 0.2), 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .paper-texture {
@@ -44,8 +55,137 @@ body {
     top: 0;
     left: 0;
     pointer-events: none;
-    opacity: 0.7;
+    opacity: 0.5;
     mix-blend-mode: multiply;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.5 0"/></filter><rect width="800" height="600" filter="url(%23noise)" opacity="0.3"/></svg>');
+}
+
+.ottoman-ornament {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0.3;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+.top-ornament {
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 50px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 30"><path d="M50,5 C60,5 70,0 80,5 C90,10 100,5 100,20 C90,15 80,25 70,20 C60,15 50,25 40,20 C30,15 20,25 10,15 C0,5 10,10 20,5 C30,0 40,5 50,5 Z" fill="%23b38728"/></svg>');
+}
+
+.bottom-ornament {
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%) rotate(180deg);
+    width: 200px;
+    height: 50px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 30"><path d="M50,5 C60,5 70,0 80,5 C90,10 100,5 100,20 C90,15 80,25 70,20 C60,15 50,25 40,20 C30,15 20,25 10,15 C0,5 10,10 20,5 C30,0 40,5 50,5 Z" fill="%23b38728"/></svg>');
+}
+
+.left-ornament {
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%) rotate(270deg);
+    width: 150px;
+    height: 50px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 30"><path d="M50,5 C60,5 70,0 80,5 C90,10 100,5 100,20 C90,15 80,25 70,20 C60,15 50,25 40,20 C30,15 20,25 10,15 C0,5 10,10 20,5 C30,0 40,5 50,5 Z" fill="%23b38728"/></svg>');
+}
+
+.right-ornament {
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    width: 150px;
+    height: 50px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 30"><path d="M50,5 C60,5 70,0 80,5 C90,10 100,5 100,20 C90,15 80,25 70,20 C60,15 50,25 40,20 C30,15 20,25 10,15 C0,5 10,10 20,5 C30,0 40,5 50,5 Z" fill="%23b38728"/></svg>');
+}
+
+.corner-svg {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    z-index: 3;
+    opacity: 0.95;
+}
+
+.top-left-corner {
+    top: 10px;
+    left: 10px;
+    transform: rotate(180deg);
+}
+
+.top-right-corner {
+    top: 10px;
+    right: 10px;
+    transform: rotate(270deg);
+}
+
+.bottom-left-corner {
+    bottom: 10px;
+    left: 10px;
+    transform: rotate(90deg);
+}
+
+.bottom-right-corner {
+    bottom: 10px;
+    right: 10px;
+    transform: rotate(0deg);
+}
+
+.top-decoration {
+    width: 250px;
+    height: auto;
+    margin-bottom: 20px;
+    opacity: 0.95;
+}
+
+.inner-frame {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    right: 40px;
+    bottom: 40px;
+    border: 2px solid rgba(179, 135, 40, 0.5); /* More visible golden frame */
+    pointer-events: none;
+    border-radius: 8px;
+    box-shadow: inset 0 0 20px rgba(101, 67, 33, 0.1);
+    background: linear-gradient(45deg, 
+        rgba(179, 135, 40, 0.03) 0%,
+        rgba(222, 183, 97, 0.03) 25%, 
+        rgba(255, 215, 0, 0.03) 50%,
+        rgba(222, 183, 97, 0.03) 75%,
+        rgba(179, 135, 40, 0.03) 100%
+    );
+}
+
+.background-pattern {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path d="M0,20 A20,20 0 0,1 20,0 A20,20 0 0,1 40,20 A20,20 0 0,1 20,40 A20,20 0 0,1 0,20 Z M20,10 A10,10 0 0,0 10,20 A10,10 0 0,0 20,30 A10,10 0 0,0 30,20 A10,10 0 0,0 20,10 Z" fill="%23b38728" fill-opacity="0.05"/></svg>');
+    background-size: 80px 80px;
+    opacity: 0.6;
+}
+
+/* Create aged look on paper background */
+.background-pattern::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(rgba(101, 67, 33, 0.1) 1px, transparent 1px),
+        radial-gradient(rgba(101, 67, 33, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px, 10px 10px;
+    background-position: 0 0, 10px 10px;
+    opacity: 0.6;
 }
 
 .text-wrapper {
@@ -53,9 +193,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 40px 0;
-    z-index: 2;
-    /* Ensure text is above texture */
+    width: 80%;
+    margin: 20px 0;
+    z-index: 5; /* Ensure text is above all background elements */
 }
 
 .text-line {
@@ -69,52 +209,83 @@ body {
     display: flex;
     justify-content: center;
     align-items: baseline;
-    height: 150px;
+    width: 100%;
+    height: auto;
+    min-height: 150px;
+    margin-bottom: 30px;
 }
 
-/* First letter uses Aralar font */
-.first-letter {
-    font-family: 'Aralar', serif;
-    font-size: 5.5rem;
-    display: inline-block;
-    line-height: 1;
-    margin-top: 5px;
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
-}
-
-/* Last letter uses Ilkson font */
-.last-letter {
-    font-family: 'Ilkson', cursive;
+/* All letters use WR font */
+.first-letter, .middle-letters, .last-letter {
+    font-family: 'WR', serif;
     font-size: 6rem;
     display: inline-block;
     line-height: 1;
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
-}
-
-/* Middle letters use Aralar font */
-.middle-letters {
-    font-family: 'Aralar', serif;
-    font-size: 5.5rem;
-    display: inline-block;
-    line-height: 1;
-    margin-top: 5px;
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+    text-shadow: 2px 2px 4px rgba(101, 67, 33, 0.25);
+    transition: font-size 0.3s ease;
+    color: #5c3517; /* Rich brown ink color */
+    filter: none !important;
 }
 
 .ornament-container {
     position: relative;
     width: 100%;
-    height: 120px;
-    margin-top: -20px;
+    height: auto;
+    min-height: 150px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    transform: translateY(-110px);
 }
 
-.ornament {
-    font-family: 'Aralar', serif;
-    font-size: 20rem;
-    color: #000000;
-    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
+.ornament-vector {
+    max-width: 45%;
+    height: auto;
     display: none;
+    margin-bottom: 15px;
+    transition: all 0.3s ease-in-out;
+}
+
+.ornament-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    gap: 15px;
+}
+
+.nav-button {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background-color: #b38728; /* Richer gold color */
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.nav-button:hover {
+    background-color: #deb761; /* Lighter gold color */
+    transform: scale(1.1);
+}
+
+.nav-button:disabled {
+    background-color: #d8d0b8;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.ornament-counter {
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    color: #666;
 }
 
 .text-flourish {
@@ -128,7 +299,7 @@ body {
 
 .flourish-path {
     fill: none;
-    stroke: #000000;
+    stroke: #b38728;
     stroke-width: 1.5;
     filter: url(#shadow);
 }
@@ -197,18 +368,26 @@ body {
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
-    width: 300px;
-    text-align: center;
+    width: 350px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 251, 240, 0.8);
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(201, 168, 85, 0.3);
 }
 
 .text-input {
-    width: 100%;
+    flex: 1;
     padding: 12px;
     font-size: 18px;
-    border: 2px solid #800020;
+    border: 2px solid #b38728; /* Richer gold border */
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.9);
-    color: #800020;
+    background: rgba(255, 251, 240, 0.9);
+    color: #5c3517; /* Rich brown text color */
     text-align: center;
     font-family: 'Arial', sans-serif;
     transition: all 0.3s ease;
@@ -216,8 +395,8 @@ body {
 
 .text-input:focus {
     outline: none;
-    box-shadow: 0 0 10px rgba(128, 0, 32, 0.3);
-    border-color: #a00028;
+    box-shadow: 0 0 10px rgba(179, 135, 40, 0.5); /* Gold glow */
+    border-color: #deb761;
 }
 
 @media (max-width: 850px) {
@@ -226,11 +405,17 @@ body {
         height: 400px;
     }
 
-    .first-letter, .last-letter {
-        font-size: 4rem;
+    .first-letter, .middle-letters, .last-letter {
+        font-size: 5rem;
     }
+    
+    .ornament-vector {
+        max-width: 35%;
+    }
+}
 
-    .middle-letters {
-        font-size: 3.5rem;
-    }
+/* Remove any other filter rules related to SVGs */
+img[src$=".svg"] {
+    /* Reset any filters that might be applied globally */
+    filter: none;
 } 

@@ -6,5 +6,4 @@ This projects aims to create a website for creating Ottoman style calligraphy ar
 
 The project is hosted on GitHub Pages.
 
-fonts/ilkson.ttf and fonts/aralar.ttf is the font used for the project. You will use ilkson.ttf for the initial and the last letter of the name. You will use aralar.ttf for the rest of the letters. You will use the font-family: 'Ilkson', cursive; for the initial and the last letter of the name. You will use the font-family: 'Aralar', cursive; for the rest of the letters.
-
+wr.ttf is the font used for the project. 

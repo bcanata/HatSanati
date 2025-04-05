@@ -59,21 +59,43 @@
                 class="flourish-path" />
         </svg>
 
+        <!-- Ottoman frame ornaments -->
+        <div class="inner-frame"></div>
+        <div class="ottoman-ornament top-ornament"></div>
+        <div class="ottoman-ornament bottom-ornament"></div>
+        <div class="ottoman-ornament left-ornament"></div>
+        <div class="ottoman-ornament right-ornament"></div>
+
+        <!-- Corner SVGs -->
+        <img src="./vectors/corner.svg" class="corner-svg top-left-corner" alt="Corner Ornament"
+            style="filter: invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));">
+        <img src="./vectors/corner.svg" class="corner-svg top-right-corner" alt="Corner Ornament"
+            style="filter: invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));">
+        <img src="./vectors/corner.svg" class="corner-svg bottom-left-corner" alt="Corner Ornament"
+            style="filter: invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));">
+        <img src="./vectors/corner.svg" class="corner-svg bottom-right-corner" alt="Corner Ornament"
+            style="filter: invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));">
+
         <div class="text-wrapper">
+            <!-- Top decoration above text -->
+            <img src="./vectors/top.svg" class="top-decoration" alt="Top Decoration"
+                style="filter: invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.25));">
+
             <div class="text-line">
                 <span class="first-letter"></span>
                 <span class="middle-letters"></span>
                 <span class="last-letter"></span>
             </div>
             <div class="ornament-container">
-                <span class="ornament"></span>
+                <img class="ornament-vector" src="./vectors/shape1.svg" alt="Ornament">
             </div>
         </div>
 
-
         <!-- Add input container -->
         <div class="input-container">
-            <input type="text" class="text-input" placeholder="Type your text here..." value="Bugra" maxlength="20">
+            <button class="nav-button prev-button">&lt;</button>
+            <input type="text" class="text-input" placeholder="Adınız / Your Name" value="Bugra" maxlength="20">
+            <button class="nav-button next-button">&gt;</button>
         </div>
     </div>
 
@@ -83,13 +105,26 @@
             const firstLetterSpan = document.querySelector('.first-letter');
             const middleLettersSpan = document.querySelector('.middle-letters');
             const lastLetterSpan = document.querySelector('.last-letter');
-            const ornamentSpan = document.querySelector('.ornament');
+            const ornamentVector = document.querySelector('.ornament-vector');
             const ornamentContainer = document.querySelector('.ornament-container');
+            const prevButton = document.querySelector('.prev-button');
+            const nextButton = document.querySelector('.next-button');
+
+            // Apply gold filter to SVG elements immediately
+            document.querySelectorAll('img[src$=".svg"]').forEach(img => {
+                img.style.filter = "invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3))";
+            });
+
+            // Special treatment for top decoration
+            const topDecoration = document.querySelector('.top-decoration');
+            if (topDecoration) {
+                topDecoration.style.filter = "invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.25))";
+            }
 
             // Set letter spacing for the text elements
             firstLetterSpan.style.letterSpacing = '-0.05em';
             middleLettersSpan.style.letterSpacing = '-0.05em';
-            lastLetterSpan.style.letterSpacing = '-0.1em';
+            lastLetterSpan.style.letterSpacing = '-0.05em';
 
             // Set initial placeholder text
             const initialText = textInput.value || 'Bugra';
@@ -104,64 +139,137 @@
                     firstLetterSpan.textContent = value[0]; // First letter
                     middleLettersSpan.textContent = value.substring(1, value.length - 1); // Middle letters
                     lastLetterSpan.textContent = value[value.length - 1]; // Last letter
+
+                    // Adjust font size based on text length
+                    let fontSize = 6; // Default size in rem (increased from 5 to 6)
+                    if (value.length > 7) {
+                        fontSize = 6 - ((value.length - 7) * 0.3);
+                        // Minimum font size
+                        fontSize = Math.max(fontSize, 4.5); // Increased minimum size
+                    }
+
+                    firstLetterSpan.style.fontSize = `${fontSize}rem`;
+                    middleLettersSpan.style.fontSize = `${fontSize}rem`;
+                    lastLetterSpan.style.fontSize = `${fontSize}rem`;
                 } else {
                     // If only one character, it's both first and last
                     firstLetterSpan.textContent = value;
                     middleLettersSpan.textContent = '';
                     lastLetterSpan.textContent = '';
+                    firstLetterSpan.style.fontSize = '6rem'; // Increased from 5rem to 6rem
                 }
 
                 // Update ornament based on text length
                 if (value.length >= 3) {
-                    const ornamentNumber = Math.min(value.length - 3, 7); // 0 for 3 chars, 1 for 4 chars, etc.
-                    ornamentSpan.textContent = ornamentNumber.toString();
-                    ornamentSpan.style.display = 'block';
+                    // Get current ornament index from counter or default to text-based selection
+                    let currentOrnament = 1;
 
-                    // Set font size for 10 or more characters
-                    if (value.length >= 10) {
-                        ornamentSpan.style.fontSize = '25rem';
+                    // Try to extract current ornament number from src attribute
+                    const currentSrc = ornamentVector.src;
+                    const match = currentSrc.match(/shape(\d+)\.svg/);
+                    if (match && match[1]) {
+                        currentOrnament = parseInt(match[1]);
                     } else {
-                        ornamentSpan.style.fontSize = '20rem';
+                        currentOrnament = Math.min(value.length - 2, 7); // 1 for 3 chars, 2 for 4 chars, etc.
                     }
+
+                    // Update ornament image
+                    ornamentVector.src = `./vectors/shape${currentOrnament}.svg`;
+                    ornamentVector.style.display = 'block';
+
+                    // Apply the gold filter
+                    ornamentVector.style.filter = "invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3))";
+
+                    // Adjust SVG size based on name length
+                    let scaleFactor;
 
                     switch (value.length) {
-                        case 10:
-                            ornamentContainer.style.transform = 'translateY(-200px)';
-                            break;
-                        case 9:
-                            ornamentContainer.style.transform = 'translateY(-200px)';
-                            break;
-                        case 8:
-                            ornamentContainer.style.transform = 'translateY(-195px)';
-                            break;
-                        case 7:
-                            ornamentContainer.style.transform = 'translateY(-210px)';
-                            break;
-                        case 6:
-                            ornamentContainer.style.transform = 'translateY(-175px)';
-                            break;
-                        case 5:
-                            ornamentContainer.style.transform = 'translateY(-191px)';
+                        case 3:
+                            scaleFactor = 30; // Smaller
                             break;
                         case 4:
-                            ornamentContainer.style.transform = 'translateY(-155px)';
+                            scaleFactor = 32;
                             break;
-                        case 3:
-                            ornamentContainer.style.transform = 'translateY(-115px)';
+                        case 5:
+                            scaleFactor = 35;
+                            break;
+                        case 6:
+                            scaleFactor = 38;
+                            break;
+                        case 7:
+                            scaleFactor = 40;
+                            break;
+                        case 8:
+                            scaleFactor = 42;
+                            break;
+                        case 9:
+                            scaleFactor = 45;
                             break;
                         default:
-                            ornamentContainer.style.transform = 'translateY(-150px)';
+                            scaleFactor = 48; // For 10+ characters
                     }
+
+                    ornamentVector.style.maxWidth = `${scaleFactor}%`;
+
+                    // Update button states
+                    prevButton.disabled = currentOrnament <= 1;
+                    nextButton.disabled = currentOrnament >= 14;
                 } else {
-                    ornamentSpan.style.display = 'none';
-                    ornamentContainer.style.transform = 'translateY(0)';
+                    ornamentVector.style.display = 'none';
                 }
             }
 
             // Add input event listener
             textInput.addEventListener('input', (e) => {
+                // Reset ornament when text changes
+                ornamentVector.src = './vectors/shape1.svg';
+
+                // Apply gold filter to the reset ornament
+                ornamentVector.style.filter = "invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3))";
+
                 updateText(e.target.value);
             });
+
+            // Add ornament navigation event listeners
+            prevButton.addEventListener('click', () => {
+                // Extract current ornament number from src attribute
+                const currentSrc = ornamentVector.src;
+                const match = currentSrc.match(/shape(\d+)\.svg/);
+                if (match && match[1]) {
+                    const currentOrnament = parseInt(match[1]);
+                    if (currentOrnament > 1) {
+                        ornamentVector.src = `./vectors/shape${currentOrnament - 1}.svg`;
+                        // Apply gold filter to the ornament vector
+                        ornamentVector.style.filter = "invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3))";
+                        prevButton.disabled = currentOrnament - 1 <= 1;
+                        nextButton.disabled = false;
+                    }
+                }
+            });
+
+            nextButton.addEventListener('click', () => {
+                // Extract current ornament number from src attribute
+                const currentSrc = ornamentVector.src;
+                const match = currentSrc.match(/shape(\d+)\.svg/);
+                if (match && match[1]) {
+                    const currentOrnament = parseInt(match[1]);
+                    if (currentOrnament < 14) {
+                        ornamentVector.src = `./vectors/shape${currentOrnament + 1}.svg`;
+                        // Apply gold filter to the ornament vector
+                        ornamentVector.style.filter = "invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3))";
+                        nextButton.disabled = currentOrnament + 1 >= 14;
+                        prevButton.disabled = false;
+                    }
+                }
+            });
+
+            // Hide ornament initially if text is less than 3 characters
+            if (initialText.length < 3) {
+                ornamentVector.style.display = 'none';
+            } else {
+                // Apply gold filter to the initial ornament
+                ornamentVector.style.filter = "invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3))";
+            }
         });
     </script>
 </body>
