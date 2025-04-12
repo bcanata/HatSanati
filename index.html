@@ -79,7 +79,7 @@
         <div class="text-wrapper">
             <!-- Top decoration above text -->
             <img src="./vectors/top.svg" class="top-decoration" alt="Top Decoration"
-                style="filter: invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.25));">
+                style="filter: invert(22%) sepia(16%) saturate(1234%) hue-rotate(346deg) brightness(93%) contrast(95%); opacity: 0.9;">
 
             <div class="text-line">
                 <span class="first-letter"></span>
@@ -112,13 +112,22 @@
 
             // Apply gold filter to SVG elements immediately
             document.querySelectorAll('img[src$=".svg"]').forEach(img => {
-                img.style.filter = "invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3))";
+                // Apply filter based on element class
+                if (img.classList.contains('corner-svg')) {
+                    // Keep corners with gold color
+                    img.style.filter = "invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3))";
+                } else {
+                    // Apply brown color to other SVG elements
+                    img.style.filter = "invert(22%) sepia(16%) saturate(1234%) hue-rotate(346deg) brightness(93%) contrast(95%)";
+                    img.style.opacity = "0.9";
+                }
             });
 
             // Special treatment for top decoration
             const topDecoration = document.querySelector('.top-decoration');
             if (topDecoration) {
-                topDecoration.style.filter = "invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.25))";
+                topDecoration.style.filter = "invert(22%) sepia(16%) saturate(1234%) hue-rotate(346deg) brightness(93%) contrast(95%)";
+                topDecoration.style.opacity = "0.9";
             }
 
             // Set letter spacing for the text elements
@@ -177,8 +186,9 @@
                     ornamentVector.src = `./vectors/shape${currentOrnament}.svg`;
                     ornamentVector.style.display = 'block';
 
-                    // Apply the gold filter
-                    ornamentVector.style.filter = "invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3))";
+                    // Apply the same color as the text instead of gold filter
+                    ornamentVector.style.filter = "invert(22%) sepia(16%) saturate(1234%) hue-rotate(346deg) brightness(93%) contrast(95%)";
+                    ornamentVector.style.opacity = "0.9";
 
                     // Adjust SVG size based on name length
                     let scaleFactor;
@@ -224,8 +234,9 @@
                 // Reset ornament when text changes
                 ornamentVector.src = './vectors/shape1.svg';
 
-                // Apply gold filter to the reset ornament
-                ornamentVector.style.filter = "invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3))";
+                // Apply the same color as the text
+                ornamentVector.style.filter = "invert(22%) sepia(16%) saturate(1234%) hue-rotate(346deg) brightness(93%) contrast(95%)";
+                ornamentVector.style.opacity = "0.9";
 
                 updateText(e.target.value);
             });
@@ -239,8 +250,9 @@
                     const currentOrnament = parseInt(match[1]);
                     if (currentOrnament > 1) {
                         ornamentVector.src = `./vectors/shape${currentOrnament - 1}.svg`;
-                        // Apply gold filter to the ornament vector
-                        ornamentVector.style.filter = "invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3))";
+                        // Apply the same color as the text instead of gold filter
+                        ornamentVector.style.filter = "invert(22%) sepia(16%) saturate(1234%) hue-rotate(346deg) brightness(93%) contrast(95%)";
+                        ornamentVector.style.opacity = "0.9";
                         prevButton.disabled = currentOrnament - 1 <= 1;
                         nextButton.disabled = false;
                     }
@@ -255,8 +267,9 @@
                     const currentOrnament = parseInt(match[1]);
                     if (currentOrnament < 14) {
                         ornamentVector.src = `./vectors/shape${currentOrnament + 1}.svg`;
-                        // Apply gold filter to the ornament vector
-                        ornamentVector.style.filter = "invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3))";
+                        // Apply the same color as the text instead of gold filter
+                        ornamentVector.style.filter = "invert(22%) sepia(16%) saturate(1234%) hue-rotate(346deg) brightness(93%) contrast(95%)";
+                        ornamentVector.style.opacity = "0.9";
                         nextButton.disabled = currentOrnament + 1 >= 14;
                         prevButton.disabled = false;
                     }
@@ -267,8 +280,9 @@
             if (initialText.length < 3) {
                 ornamentVector.style.display = 'none';
             } else {
-                // Apply gold filter to the initial ornament
-                ornamentVector.style.filter = "invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3))";
+                // Apply the same color as the text instead of gold filter
+                ornamentVector.style.filter = "invert(22%) sepia(16%) saturate(1234%) hue-rotate(346deg) brightness(93%) contrast(95%)";
+                ornamentVector.style.opacity = "0.9";
             }
         });
     </script>
