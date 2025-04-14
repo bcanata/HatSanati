@@ -4,103 +4,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calligraphy Art</title>
+    <meta name="description" content="Hat Sanatı - Osmanlı tarzı kaligrafi sanatı ile isminizi süsleyin">
+    <meta name="theme-color" content="#eee5cb">
+    <title>Hat Sanatı - Osmanlı Kaligrafi</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="icons/favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="icons/favicon.svg">
+
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <div class="artwork-container">
-        <!-- Add SVG filters and paper texture -->
-        <svg width="0" height="0">
-            <defs>
-                <!-- Noise filter for paper texture -->
-                <filter id="paper-texture" x="0%" y="0%" width="100%" height="100%">
-                    <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" result="noise" />
-                    <feDiffuseLighting in="noise" lighting-color="#938976" surfaceScale="2">
-                        <feDistantLight azimuth="45" elevation="60" />
-                    </feDiffuseLighting>
-                </filter>
 
-                <!-- Shadow filter for flourishes -->
-                <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur" />
-                    <feOffset in="blur" dx="2" dy="2" result="offsetBlur" />
-                    <feMerge>
-                        <feMergeNode in="offsetBlur" />
-                        <feMergeNode in="SourceGraphic" />
-                    </feMerge>
-                </filter>
+    <main class="main-container">
+        <div class="artwork-container">
+            <!-- Add corner SVGs -->
+            <img src="vectors_new_1/corner-bottom-right.svg" alt="Corner Decoration" class="corner-svg top-left-corner">
+            <img src="vectors_new_1/corner-bottom-right.svg" alt="Corner Decoration"
+                class="corner-svg top-right-corner">
+            <img src="vectors_new_1/corner-bottom-right.svg" alt="Corner Decoration"
+                class="corner-svg bottom-left-corner">
+            <img src="vectors_new_1/corner-bottom-right.svg" alt="Corner Decoration"
+                class="corner-svg bottom-right-corner">
 
-                <!-- Grain texture -->
-                <filter id="grain">
-                    <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
-                    <feColorMatrix type="saturate" values="0" />
-                </filter>
-            </defs>
-        </svg>
+            <!-- Ottoman frame ornaments -->
+            <div class="inner-frame"></div>
 
-        <!-- Paper texture overlay -->
-        <svg class="paper-texture" viewBox="0 0 800 600" preserveAspectRatio="none">
-            <!-- Base texture -->
-            <rect width="100%" height="100%" filter="url(#paper-texture)" />
-
-            <!-- Grain overlay -->
-            <rect width="100%" height="100%" filter="url(#grain)" opacity="0.1" />
-
-            <!-- Subtle stains -->
-            <circle cx="20%" cy="30%" r="100" fill="#938976" opacity="0.03" />
-            <circle cx="80%" cy="70%" r="120" fill="#8b7355" opacity="0.02" />
-            <ellipse cx="50%" cy="40%" rx="200" ry="150" fill="#826644" opacity="0.015" />
-        </svg>
-
-        <svg class="ornamental-frame" viewBox="0 0 800 600">
-            <path
-                d="M 50,50 C 150,30 650,30 750,50 C 770,150 770,450 750,550 C 650,570 150,570 50,550 C 30,450 30,150 50,50 Z"
-                class="flourish-path" />
-        </svg>
-
-        <!-- Ottoman frame ornaments -->
-        <div class="inner-frame"></div>
-        <div class="ottoman-ornament top-ornament"></div>
-        <div class="ottoman-ornament bottom-ornament"></div>
-        <div class="ottoman-ornament left-ornament"></div>
-        <div class="ottoman-ornament right-ornament"></div>
-
-        <!-- Corner SVGs -->
-        <img src="./vectors/corner.svg" class="corner-svg top-left-corner" alt="Corner Ornament"
-            style="filter: invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));">
-        <img src="./vectors/corner.svg" class="corner-svg top-right-corner" alt="Corner Ornament"
-            style="filter: invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));">
-        <img src="./vectors/corner.svg" class="corner-svg bottom-left-corner" alt="Corner Ornament"
-            style="filter: invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));">
-        <img src="./vectors/corner.svg" class="corner-svg bottom-right-corner" alt="Corner Ornament"
-            style="filter: invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));">
-
-        <div class="text-wrapper">
-            <!-- Top decoration above text -->
-            <img src="./vectors/top.svg" class="top-decoration" alt="Top Decoration"
-                style="filter: invert(22%) sepia(16%) saturate(1234%) hue-rotate(346deg) brightness(93%) contrast(95%); opacity: 0.9;">
-
-            <div class="text-line">
-                <span class="first-letter"></span>
-                <span class="middle-letters"></span>
-                <span class="last-letter"></span>
+            <div class="text-wrapper">
+                <!-- Logo removed from above the text -->
+                <div class="text-line">
+                    <span class="first-letter"></span>
+                    <span class="middle-letters"></span>
+                    <span class="last-letter"></span>
+                </div>
+                <div class="ornament-container">
+                    <img class="ornament-vector" src="./vectors/shape1.svg" alt="Ornament">
+                </div>
             </div>
-            <div class="ornament-container">
-                <img class="ornament-vector" src="./vectors/shape1.svg" alt="Ornament">
+
+            <!-- Add new logo above input box -->
+            <div class="bottom-logo-container">
+                <img src="./vectors_new_1/logo.svg" alt="Turkish Airlines Logo" class="bottom-logo">
             </div>
         </div>
 
-        <!-- Add input container -->
+        <!-- Add input container outside of artwork-container -->
         <div class="input-container">
-            <button class="nav-button prev-button">&lt;</button>
-            <input type="text" class="text-input" placeholder="Adınız / Your Name" value="Bugra" maxlength="20">
-            <button class="nav-button next-button">&gt;</button>
+            <button class="nav-button prev-button" aria-label="Önceki süsleme">&lt;</button>
+            <input type="text" class="text-input" placeholder="Adınız / Your Name" value="Bugra" maxlength="20"
+                aria-label="İsminizi girin">
+            <button class="nav-button next-button" aria-label="Sonraki süsleme">&gt;</button>
         </div>
-    </div>
+
+        <!-- Add share button -->
+        <button class="share-button" aria-label="Paylaş / Share">
+            <span>Paylaş / Share</span>
+        </button>
+
+        <!-- QR Code Modal -->
+        <div class="qr-modal" id="qrModal">
+            <div class="qr-modal-content">
+                <span class="close-modal">&times;</span>
+                <h3>Kaligrafinizi Paylaşın / Share Your Calligraphy</h3>
+                <div id="qrcode"></div>
+                <p class="qr-instructions">QR kodu tarayarak kaligrafinizi paylaşabilirsiniz.</p>
+                <p class="qr-instructions">Scan the QR code to share your calligraphy art.</p>
+            </div>
+        </div>
+    </main>
 
     <script>
+        /**
+         * Hat Sanatı - Ottoman Calligraphy Art Generator
+         * Main application script
+         */
         document.addEventListener('DOMContentLoaded', function () {
+            // DOM Elements
             const textInput = document.querySelector('.text-input');
             const firstLetterSpan = document.querySelector('.first-letter');
             const middleLettersSpan = document.querySelector('.middle-letters');
@@ -110,51 +92,94 @@
             const prevButton = document.querySelector('.prev-button');
             const nextButton = document.querySelector('.next-button');
 
-            // Apply gold filter to SVG elements immediately
-            document.querySelectorAll('img[src$=".svg"]').forEach(img => {
-                // Apply filter based on element class
-                if (img.classList.contains('corner-svg')) {
-                    // Keep corners with gold color
-                    img.style.filter = "invert(40%) sepia(20%) saturate(1095%) hue-rotate(358deg) brightness(89%) contrast(96%) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3))";
-                } else {
-                    // Apply brown color to other SVG elements
-                    img.style.filter = "invert(22%) sepia(16%) saturate(1234%) hue-rotate(346deg) brightness(93%) contrast(95%)";
-                    img.style.opacity = "0.9";
-                }
-            });
+            // Constants
+            const MAX_ORNAMENTS = 14;
+            const MIN_ORNAMENTS = 1;
+            const BLACK_FILTER = "brightness(0) saturate(100%)";
+            const GOLD_FILTER = "invert(17%) sepia(92%) saturate(4000%) hue-rotate(347deg) brightness(85%) contrast(90%) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3))";
 
-            // Special treatment for top decoration
-            const topDecoration = document.querySelector('.top-decoration');
-            if (topDecoration) {
-                topDecoration.style.filter = "invert(22%) sepia(16%) saturate(1234%) hue-rotate(346deg) brightness(93%) contrast(95%)";
-                topDecoration.style.opacity = "0.9";
-            }
+            // Check for URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const nameParam = urlParams.get('name');
+            const ornamentParam = urlParams.get('ornament');
 
-            // Set letter spacing for the text elements
-            firstLetterSpan.style.letterSpacing = '-0.05em';
-            middleLettersSpan.style.letterSpacing = '-0.05em';
-            lastLetterSpan.style.letterSpacing = '-0.05em';
+            // Set initial text from URL parameter or default
+            let initialText = nameParam || textInput.value || 'Bugra';
+            textInput.value = initialText;
 
-            // Set initial placeholder text
-            const initialText = textInput.value || 'Bugra';
+            // Initialize UI
+            initializeUI();
+
+            // Update text display
             updateText(initialText);
 
-            // Function to update text and ornament
+            // Set ornament from URL parameter if provided
+            if (ornamentParam && !isNaN(parseInt(ornamentParam))) {
+                const ornamentNumber = parseInt(ornamentParam);
+                if (ornamentNumber >= MIN_ORNAMENTS && ornamentNumber <= MAX_ORNAMENTS) {
+                    ornamentVector.src = `./vectors/shape${ornamentNumber}.svg`;
+                    applyBlackFilter(ornamentVector);
+                    updateButtonStates(ornamentNumber);
+                }
+            }
+
+            // Add event listeners
+            textInput.addEventListener('input', handleTextInput);
+            prevButton.addEventListener('click', handlePrevButtonClick);
+            nextButton.addEventListener('click', handleNextButtonClick);
+
+            /**
+             * Initialize the UI by setting up SVG filters and text properties
+             */
+            function initializeUI() {
+                // Apply filters to SVG elements
+                document.querySelectorAll('img[src$=".svg"]').forEach(img => {
+                    if (!img.classList.contains('bottom-logo') && !img.classList.contains('corner-svg')) {
+                        // Apply black color to SVG elements
+                        img.style.filter = BLACK_FILTER;
+                        img.style.opacity = "0.9";
+                    }
+                });
+
+                // Set letter spacing for the text elements
+                firstLetterSpan.style.letterSpacing = '-0.05em';
+                middleLettersSpan.style.letterSpacing = '-0.05em';
+                lastLetterSpan.style.letterSpacing = '-0.05em';
+
+                // Initial button states
+                updateButtonStates(getCurrentOrnamentNumber());
+            }
+
+            /**
+             * Update text and ornament based on input value
+             * @param {string} value - The text to display
+             */
             function updateText(value) {
                 if (!value) value = 'Bugra';
 
-                // Split the text to apply different fonts
+                // Update text display
+                updateTextDisplay(value);
+
+                // Update ornament based on text length
+                updateOrnament(value);
+            }
+
+            /**
+             * Update the text display with the proper styling
+             * @param {string} value - The text to display
+             */
+            function updateTextDisplay(value) {
                 if (value.length > 1) {
                     firstLetterSpan.textContent = value[0]; // First letter
                     middleLettersSpan.textContent = value.substring(1, value.length - 1); // Middle letters
                     lastLetterSpan.textContent = value[value.length - 1]; // Last letter
 
                     // Adjust font size based on text length
-                    let fontSize = 6; // Default size in rem (increased from 5 to 6)
+                    let fontSize = 6; // Default size in rem
                     if (value.length > 7) {
                         fontSize = 6 - ((value.length - 7) * 0.3);
                         // Minimum font size
-                        fontSize = Math.max(fontSize, 4.5); // Increased minimum size
+                        fontSize = Math.max(fontSize, 4.5);
                     }
 
                     firstLetterSpan.style.fontSize = `${fontSize}rem`;
@@ -165,20 +190,20 @@
                     firstLetterSpan.textContent = value;
                     middleLettersSpan.textContent = '';
                     lastLetterSpan.textContent = '';
-                    firstLetterSpan.style.fontSize = '6rem'; // Increased from 5rem to 6rem
+                    firstLetterSpan.style.fontSize = '6rem';
                 }
+            }
 
-                // Update ornament based on text length
+            /**
+             * Update the ornament based on text length
+             * @param {string} value - The text that determines the ornament
+             */
+            function updateOrnament(value) {
                 if (value.length >= 3) {
-                    // Get current ornament index from counter or default to text-based selection
-                    let currentOrnament = 1;
+                    // Get current ornament index or default to text-based selection
+                    let currentOrnament = getCurrentOrnamentNumber();
 
-                    // Try to extract current ornament number from src attribute
-                    const currentSrc = ornamentVector.src;
-                    const match = currentSrc.match(/shape(\d+)\.svg/);
-                    if (match && match[1]) {
-                        currentOrnament = parseInt(match[1]);
-                    } else {
+                    if (currentOrnament === 0) {
                         currentOrnament = Math.min(value.length - 2, 7); // 1 for 3 chars, 2 for 4 chars, etc.
                     }
 
@@ -186,106 +211,175 @@
                     ornamentVector.src = `./vectors/shape${currentOrnament}.svg`;
                     ornamentVector.style.display = 'block';
 
-                    // Apply the same color as the text instead of gold filter
-                    ornamentVector.style.filter = "invert(22%) sepia(16%) saturate(1234%) hue-rotate(346deg) brightness(93%) contrast(95%)";
-                    ornamentVector.style.opacity = "0.9";
+                    // Apply the black color filter
+                    applyBlackFilter(ornamentVector);
 
                     // Adjust SVG size based on name length
-                    let scaleFactor;
-
-                    switch (value.length) {
-                        case 3:
-                            scaleFactor = 30; // Smaller
-                            break;
-                        case 4:
-                            scaleFactor = 32;
-                            break;
-                        case 5:
-                            scaleFactor = 35;
-                            break;
-                        case 6:
-                            scaleFactor = 38;
-                            break;
-                        case 7:
-                            scaleFactor = 40;
-                            break;
-                        case 8:
-                            scaleFactor = 42;
-                            break;
-                        case 9:
-                            scaleFactor = 45;
-                            break;
-                        default:
-                            scaleFactor = 48; // For 10+ characters
-                    }
-
-                    ornamentVector.style.maxWidth = `${scaleFactor}%`;
+                    adjustOrnamentSize(value.length);
 
                     // Update button states
-                    prevButton.disabled = currentOrnament <= 1;
-                    nextButton.disabled = currentOrnament >= 14;
+                    updateButtonStates(currentOrnament);
                 } else {
                     ornamentVector.style.display = 'none';
                 }
             }
 
-            // Add input event listener
-            textInput.addEventListener('input', (e) => {
+            /**
+             * Get the current ornament number from the src attribute
+             * @returns {number} The current ornament number or 0 if not found
+             */
+            function getCurrentOrnamentNumber() {
+                const currentSrc = ornamentVector.src;
+                const match = currentSrc.match(/shape(\d+)\.svg/);
+                return match && match[1] ? parseInt(match[1]) : 0;
+            }
+
+            /**
+             * Apply the black color filter to an element
+             * @param {HTMLElement} element - The element to apply the filter to
+             */
+            function applyBlackFilter(element) {
+                element.style.filter = BLACK_FILTER;
+                element.style.opacity = "0.9";
+            }
+
+            /**
+             * Adjust the ornament size based on text length
+             * @param {number} textLength - The length of the text
+             */
+            function adjustOrnamentSize(textLength) {
+                let scaleFactor;
+
+                switch (textLength) {
+                    case 3: scaleFactor = 30; break; // Smaller
+                    case 4: scaleFactor = 32; break;
+                    case 5: scaleFactor = 35; break;
+                    case 6: scaleFactor = 38; break;
+                    case 7: scaleFactor = 40; break;
+                    case 8: scaleFactor = 42; break;
+                    case 9: scaleFactor = 45; break;
+                    default: scaleFactor = 48; break; // For 10+ characters
+                }
+
+                ornamentVector.style.maxWidth = `${scaleFactor}%`;
+            }
+
+            /**
+             * Update the navigation button states
+             * @param {number} currentOrnament - The current ornament number
+             */
+            function updateButtonStates(currentOrnament) {
+                prevButton.disabled = currentOrnament <= MIN_ORNAMENTS;
+                nextButton.disabled = currentOrnament >= MAX_ORNAMENTS;
+            }
+
+            /**
+             * Handle text input changes
+             * @param {Event} e - The input event
+             */
+            function handleTextInput(e) {
                 // Reset ornament when text changes
                 ornamentVector.src = './vectors/shape1.svg';
 
-                // Apply the same color as the text
-                ornamentVector.style.filter = "invert(22%) sepia(16%) saturate(1234%) hue-rotate(346deg) brightness(93%) contrast(95%)";
-                ornamentVector.style.opacity = "0.9";
+                // Apply the black color filter
+                applyBlackFilter(ornamentVector);
 
+                // Update text display
                 updateText(e.target.value);
+            }
+
+            /**
+             * Handle previous button click
+             */
+            function handlePrevButtonClick() {
+                const currentOrnament = getCurrentOrnamentNumber();
+                if (currentOrnament > MIN_ORNAMENTS) {
+                    // Navigate to previous ornament
+                    ornamentVector.src = `./vectors/shape${currentOrnament - 1}.svg`;
+
+                    // Apply the black color filter
+                    applyBlackFilter(ornamentVector);
+
+                    // Update button states
+                    updateButtonStates(currentOrnament - 1);
+                }
+            }
+
+            /**
+             * Handle next button click
+             */
+            function handleNextButtonClick() {
+                const currentOrnament = getCurrentOrnamentNumber();
+                if (currentOrnament < MAX_ORNAMENTS) {
+                    // Navigate to next ornament
+                    ornamentVector.src = `./vectors/shape${currentOrnament + 1}.svg`;
+
+                    // Apply the black color filter
+                    applyBlackFilter(ornamentVector);
+
+                    // Update button states
+                    updateButtonStates(currentOrnament + 1);
+                }
+            }
+        });
+
+        // Share button and QR code functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const shareButton = document.querySelector('.share-button');
+            const qrModal = document.getElementById('qrModal');
+            const closeModal = document.querySelector('.close-modal');
+            const textInput = document.querySelector('.text-input');
+            const qrCodeDiv = document.getElementById('qrcode');
+
+            // Open modal and generate QR code when share button is clicked
+            shareButton.addEventListener('click', function () {
+                const name = textInput.value || 'Bugra';
+                const currentOrnament = getCurrentOrnamentNumber();
+
+                // Create the URL with the name and ornament parameters
+                const baseUrl = 'https://bcanata.github.io/HatSanati/';
+                const shareUrl = `${baseUrl}view.html?name=${encodeURIComponent(name)}&ornament=${currentOrnament}`;
+
+                // Clear previous QR code
+                qrCodeDiv.innerHTML = '';
+
+                // Generate new QR code
+                new QRCode(qrCodeDiv, {
+                    text: shareUrl,
+                    width: 200,
+                    height: 200,
+                    colorDark: '#000000',
+                    colorLight: '#FFFFFF',
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+
+                // Show the modal
+                qrModal.style.display = 'block';
             });
 
-            // Add ornament navigation event listeners
-            prevButton.addEventListener('click', () => {
-                // Extract current ornament number from src attribute
-                const currentSrc = ornamentVector.src;
-                const match = currentSrc.match(/shape(\d+)\.svg/);
-                if (match && match[1]) {
-                    const currentOrnament = parseInt(match[1]);
-                    if (currentOrnament > 1) {
-                        ornamentVector.src = `./vectors/shape${currentOrnament - 1}.svg`;
-                        // Apply the same color as the text instead of gold filter
-                        ornamentVector.style.filter = "invert(22%) sepia(16%) saturate(1234%) hue-rotate(346deg) brightness(93%) contrast(95%)";
-                        ornamentVector.style.opacity = "0.9";
-                        prevButton.disabled = currentOrnament - 1 <= 1;
-                        nextButton.disabled = false;
-                    }
+            // Close modal when X is clicked
+            closeModal.addEventListener('click', function () {
+                qrModal.style.display = 'none';
+            });
+
+            // Close modal when clicking outside the content
+            window.addEventListener('click', function (event) {
+                if (event.target === qrModal) {
+                    qrModal.style.display = 'none';
                 }
             });
 
-            nextButton.addEventListener('click', () => {
-                // Extract current ornament number from src attribute
+            // Helper function to get current ornament number from main script
+            function getCurrentOrnamentNumber() {
+                const ornamentVector = document.querySelector('.ornament-vector');
                 const currentSrc = ornamentVector.src;
                 const match = currentSrc.match(/shape(\d+)\.svg/);
-                if (match && match[1]) {
-                    const currentOrnament = parseInt(match[1]);
-                    if (currentOrnament < 14) {
-                        ornamentVector.src = `./vectors/shape${currentOrnament + 1}.svg`;
-                        // Apply the same color as the text instead of gold filter
-                        ornamentVector.style.filter = "invert(22%) sepia(16%) saturate(1234%) hue-rotate(346deg) brightness(93%) contrast(95%)";
-                        ornamentVector.style.opacity = "0.9";
-                        nextButton.disabled = currentOrnament + 1 >= 14;
-                        prevButton.disabled = false;
-                    }
-                }
-            });
-
-            // Hide ornament initially if text is less than 3 characters
-            if (initialText.length < 3) {
-                ornamentVector.style.display = 'none';
-            } else {
-                // Apply the same color as the text instead of gold filter
-                ornamentVector.style.filter = "invert(22%) sepia(16%) saturate(1234%) hue-rotate(346deg) brightness(93%) contrast(95%)";
-                ornamentVector.style.opacity = "0.9";
+                return match && match[1] ? parseInt(match[1]) : 1;
             }
         });
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/davidshimjs-qrcodejs@0.0.2/qrcode.min.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hat Sanatı - Ottoman calligraphy art viewer">
+    <meta name="theme-color" content="#eee5cb">
+    <title>Hat Sanatı - Ottoman Calligraphy Viewer</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="icons/favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="icons/favicon.svg">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .viewer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .artwork-container {
+            margin-bottom: 20px;
+        }
+
+        .credit {
+            font-family: 'Uniform', sans-serif;
+            margin-top: 20px;
+            text-align: center;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+
+        .return-button {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius-md);
+            padding: 10px 20px;
+            font-family: 'Uniform', sans-serif;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .return-button:hover {
+            background-color: var(--color-primary-light);
+            transform: translateY(-2px);
+        }
+
+        .social-share {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-button {
+            background-color: var(--color-text-light);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-button:hover {
+            transform: scale(1.1);
+        }
+
+        .download-button {
+            display: inline-block;
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius-md);
+            padding: 12px 24px;
+            font-family: 'Uniform', sans-serif;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .download-button:hover {
+            background-color: var(--color-primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .download-button:disabled {
+            background-color: #999;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="viewer-container">
+        <div class="artwork-container">
+            <!-- Add corner SVGs -->
+            <img src="vectors_new_1/corner-bottom-right.svg" alt="Corner Decoration" class="corner-svg top-left-corner">
+            <img src="vectors_new_1/corner-bottom-right.svg" alt="Corner Decoration"
+                class="corner-svg top-right-corner">
+            <img src="vectors_new_1/corner-bottom-right.svg" alt="Corner Decoration"
+                class="corner-svg bottom-left-corner">
+            <img src="vectors_new_1/corner-bottom-right.svg" alt="Corner Decoration"
+                class="corner-svg bottom-right-corner">
+
+            <!-- Ottoman frame ornaments -->
+            <div class="inner-frame"></div>
+
+            <div class="text-wrapper">
+                <div class="text-line">
+                    <span class="first-letter"></span>
+                    <span class="middle-letters"></span>
+                    <span class="last-letter"></span>
+                </div>
+                <div class="ornament-container">
+                    <img class="ornament-vector" src="./vectors/shape1.svg" alt="Ornament">
+                </div>
+            </div>
+
+            <!-- Add logo above input box -->
+            <div class="bottom-logo-container">
+                <img src="./vectors_new_1/logo.svg" alt="Turkish Airlines Logo" class="bottom-logo">
+            </div>
+        </div>
+
+        <div class="social-share">
+            <!-- Replace with functional download buttons -->
+            <button class="download-button" id="downloadButton">İndir / Download</button>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // DOM Elements
+            const firstLetterSpan = document.querySelector('.first-letter');
+            const middleLettersSpan = document.querySelector('.middle-letters');
+            const lastLetterSpan = document.querySelector('.last-letter');
+            const ornamentVector = document.querySelector('.ornament-vector');
+            const downloadButton = document.getElementById('downloadButton');
+
+            // Constants
+            const MAX_ORNAMENTS = 14;
+            const MIN_ORNAMENTS = 1;
+            const BLACK_FILTER = "brightness(0) saturate(100%)";
+
+            // Parse URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const nameParam = urlParams.get('name');
+            const ornamentParam = urlParams.get('ornament');
+
+            // Set name from URL parameter or default
+            const nameToDisplay = nameParam || 'Bugra';
+            updateTextDisplay(nameToDisplay);
+
+            // Set ornament from URL parameter or default
+            let ornamentNumber = 1;
+            if (ornamentParam && !isNaN(parseInt(ornamentParam))) {
+                ornamentNumber = parseInt(ornamentParam);
+                if (ornamentNumber >= MIN_ORNAMENTS && ornamentNumber <= MAX_ORNAMENTS) {
+                    ornamentVector.src = `./vectors/shape${ornamentNumber}.svg`;
+                }
+            }
+
+            // Apply the black color filter to SVG elements
+            applyFiltersToSVGs();
+
+            // Add event listener for download button
+            downloadButton.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                // Show loading state
+                const originalText = downloadButton.textContent;
+                downloadButton.innerHTML = 'İşleniyor... / Processing... <span class="spinner"></span>';
+                downloadButton.disabled = true;
+
+                // Wait for a moment to ensure all SVGs are properly loaded
+                setTimeout(function () {
+                    // Function to convert SVG elements to canvas images
+                    function loadSvgElements() {
+                        const svgElements = document.querySelectorAll('img[src$=".svg"]');
+                        const promises = [];
+
+                        svgElements.forEach(img => {
+                            // Create a promise for each SVG
+                            const promise = new Promise((resolve) => {
+                                // Clone the image to avoid modifying the original
+                                const tempImg = new Image();
+                                tempImg.crossOrigin = "Anonymous";
+                                tempImg.src = img.src;
+                                tempImg.onload = function () {
+                                    resolve();
+                                };
+                                tempImg.onerror = function () {
+                                    resolve(); // Resolve even on error to continue processing
+                                };
+                            });
+                            promises.push(promise);
+                        });
+
+                        return Promise.all(promises);
+                    }
+
+                    // First ensure all SVGs are loaded
+                    loadSvgElements().then(() => {
+                        // Use html2canvas to capture the artwork container
+                        html2canvas(document.querySelector('.artwork-container'), {
+                            scale: window.devicePixelRatio || 2, // Higher resolution
+                            backgroundColor: '#f9f7f4',
+                            logging: false,
+                            useCORS: true,
+                            allowTaint: true,
+                            onclone: function (clonedDoc) {
+                                // Make any needed adjustments to the cloned document
+                                const clonedSvgs = clonedDoc.querySelectorAll('img[src$=".svg"]');
+                                clonedSvgs.forEach(img => {
+                                    // Ensure SVGs are visible in the cloned document
+                                    if (img.style.filter) {
+                                        img.setAttribute('data-filter', img.style.filter);
+                                    }
+                                });
+                            }
+                        }).then(function (canvas) {
+                            try {
+                                // Convert canvas to image data URL
+                                const dataUrl = canvas.toDataURL('image/png');
+
+                                // Create a download link
+                                const downloadLink = document.createElement('a');
+
+                                // Get the name from the URL
+                                const urlParams = new URLSearchParams(window.location.search);
+                                const nameParam = urlParams.get('name') || 'Calligraphy';
+
+                                // Set download attributes
+                                downloadLink.download = `${nameParam}_Kaligrafi.png`;
+                                downloadLink.href = dataUrl;
+
+                                // Trigger download
+                                document.body.appendChild(downloadLink);
+                                downloadLink.click();
+                                document.body.removeChild(downloadLink);
+
+                                // Reset button state
+                                downloadButton.innerHTML = originalText;
+                                downloadButton.disabled = false;
+                            } catch (e) {
+                                console.error('Error generating image:', e);
+                                downloadButton.innerHTML = 'Hata Oluştu / Error Occurred';
+                                setTimeout(() => {
+                                    downloadButton.innerHTML = originalText;
+                                    downloadButton.disabled = false;
+                                }, 2000);
+                            }
+                        }).catch(function (error) {
+                            console.error('Error capturing image:', error);
+                            downloadButton.innerHTML = 'Hata Oluştu / Error Occurred';
+                            setTimeout(() => {
+                                downloadButton.innerHTML = originalText;
+                                downloadButton.disabled = false;
+                            }, 2000);
+                        });
+                    });
+                }, 500); // Small delay to ensure everything is rendered
+            });
+
+            /**
+             * Update the text display with the proper styling
+             * @param {string} value - The text to display
+             */
+            function updateTextDisplay(value) {
+                if (value.length > 1) {
+                    firstLetterSpan.textContent = value[0]; // First letter
+                    middleLettersSpan.textContent = value.substring(1, value.length - 1); // Middle letters
+                    lastLetterSpan.textContent = value[value.length - 1]; // Last letter
+
+                    // Adjust font size based on text length
+                    let fontSize = 6; // Default size in rem
+                    if (value.length > 7) {
+                        fontSize = 6 - ((value.length - 7) * 0.3);
+                        // Minimum font size
+                        fontSize = Math.max(fontSize, 4.5);
+                    }
+
+                    firstLetterSpan.style.fontSize = `${fontSize}rem`;
+                    middleLettersSpan.style.fontSize = `${fontSize}rem`;
+                    lastLetterSpan.style.fontSize = `${fontSize}rem`;
+                } else {
+                    // If only one character, it's both first and last
+                    firstLetterSpan.textContent = value;
+                    middleLettersSpan.textContent = '';
+                    lastLetterSpan.textContent = '';
+                    firstLetterSpan.style.fontSize = '6rem';
+                }
+
+                // Adjust ornament size based on text length
+                adjustOrnamentSize(value.length);
+            }
+
+            /**
+             * Apply filters to SVG elements
+             */
+            function applyFiltersToSVGs() {
+                document.querySelectorAll('img[src$=".svg"]').forEach(img => {
+                    if (!img.classList.contains('bottom-logo') && !img.classList.contains('corner-svg')) {
+                        // Apply black color to SVG elements
+                        img.style.filter = BLACK_FILTER;
+                        img.style.opacity = "0.9";
+                    }
+                });
+            }
+
+            /**
+             * Adjust the ornament size based on text length
+             * @param {number} textLength - The length of the text
+             */
+            function adjustOrnamentSize(textLength) {
+                let scaleFactor;
+                ornamentVector.style.display = 'block';
+
+                switch (textLength) {
+                    case 3: scaleFactor = 30; break; // Smaller
+                    case 4: scaleFactor = 32; break;
+                    case 5: scaleFactor = 35; break;
+                    case 6: scaleFactor = 38; break;
+                    case 7: scaleFactor = 40; break;
+                    case 8: scaleFactor = 42; break;
+                    case 9: scaleFactor = 45; break;
+                    default: scaleFactor = 48; break; // For 10+ characters
+                }
+
+                ornamentVector.style.maxWidth = `${scaleFactor}%`;
+            }
+        });
+    </script>
+
+    <!-- Add html2canvas library -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</body>
+
+</html>
