@@ -256,6 +256,8 @@
                             logging: false,
                             useCORS: true,
                             allowTaint: true,
+                            width: document.querySelector('.artwork-container').scrollWidth,
+                            height: document.querySelector('.artwork-container').scrollHeight,
                             onclone: function (clonedDoc) {
                                 // Make any needed adjustments to the cloned document
                                 const clonedSvgs = clonedDoc.querySelectorAll('img[src$=".svg"]');
